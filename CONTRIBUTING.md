@@ -36,9 +36,9 @@ ch_result_t ch_function_name(ch_context_t *ctx,
     if (!ctx || !faults) {
         return CH_ERR_NULL;
     }
-    
+
     /* Implementation */
-    
+
     return CH_OK;
 }
 ```
@@ -116,14 +116,14 @@ static int test_new_feature(void)
 {
     /* Setup */
     ch_config_t config = ch_config_default();
-    
+
     /* Execute */
     ch_result_t rc = ch_new_function(&config, ...);
-    
+
     /* Verify */
     ASSERT(rc == CH_OK);
     ASSERT(/* expected condition */);
-    
+
     return 1;
 }
 ```

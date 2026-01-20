@@ -1,9 +1,9 @@
 /**
  * @file ch_harness.h
  * @brief Main harness API
- * @traceability CH-MATH-001 §9
+ * @traceability CH-MATH-001 9
  *
- * Copyright © 2026 The Murray Family Innovation Trust. All rights reserved.
+ * Copyright (c) 2026 The Murray Family Innovation Trust. All rights reserved.
  */
 
 #ifndef CH_HARNESS_H
@@ -21,7 +21,7 @@ extern "C" {
 
 /**
  * @brief Get default configuration
- * @traceability CH-MATH-001 §6.3
+ * @traceability CH-MATH-001 6.3
  */
 ch_config_t ch_config_default(void);
 
@@ -35,7 +35,7 @@ ch_config_t ch_config_default(void);
  * @param result Output result structure
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §9.1
+ * @traceability CH-MATH-001 9.1
  */
 ch_result_t ch_harness_run(const ch_config_t *config,
                            ch_result_t_full *result,
@@ -49,7 +49,7 @@ ch_result_t ch_harness_run(const ch_config_t *config,
  * @param result Output stage result
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §9.1
+ * @traceability CH-MATH-001 9.1
  */
 ch_result_t ch_harness_run_stage(ch_stage_t stage,
                                   const ch_config_t *config,
@@ -64,7 +64,7 @@ ch_result_t ch_harness_run_stage(ch_stage_t stage,
 /**
  * @brief Get platform identifier string
  * @return Platform string (static, do not free)
- * @traceability CH-MATH-001 §10.2
+ * @traceability CH-MATH-001 10.2
  */
 const char *ch_get_platform(void);
 
@@ -73,7 +73,7 @@ const char *ch_get_platform(void);
  * @param hash_out Output buffer for 32-byte hash
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §1.4
+ * @traceability CH-MATH-001 1.4
  */
 ch_result_t ch_get_harness_hash(uint8_t hash_out[CH_HASH_SIZE],
                                  ch_fault_flags_t *faults);

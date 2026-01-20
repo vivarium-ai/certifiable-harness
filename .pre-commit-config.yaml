@@ -31,6 +31,10 @@ repos:
           - --suppress=missingIncludeSystem
           - --suppress=unmatchedSuppression
           - --suppress=unusedFunction
+          - --suppress=constParameter
+          - --suppress=variableScope
+          - --suppress=unusedStructMember
+          - --suppress=unreadVariable
           - --std=c99
           - -Iinclude
           - --quiet

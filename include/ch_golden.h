@@ -1,9 +1,9 @@
 /**
  * @file ch_golden.h
  * @brief Golden reference API
- * @traceability CH-MATH-001 §4, §5
+ * @traceability CH-MATH-001 4, 5
  *
- * Copyright © 2026 The Murray Family Innovation Trust. All rights reserved.
+ * Copyright (c) 2026 The Murray Family Innovation Trust. All rights reserved.
  */
 
 #ifndef CH_GOLDEN_H
@@ -25,7 +25,7 @@ extern "C" {
  * @param golden Output golden structure
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §4.3
+ * @traceability CH-MATH-001 4.3
  */
 ch_result_t ch_golden_load(const char *path,
                             ch_golden_t *golden,
@@ -37,7 +37,7 @@ ch_result_t ch_golden_load(const char *path,
  * @param path Output path
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §4.4
+ * @traceability CH-MATH-001 4.4
  */
 ch_result_t ch_golden_save(const ch_golden_t *golden,
                             const char *path,
@@ -50,7 +50,7 @@ ch_result_t ch_golden_save(const ch_golden_t *golden,
  * @param golden Output golden structure
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §4.4
+ * @traceability CH-MATH-001 4.4
  */
 ch_result_t ch_golden_generate(const ch_result_t_full *result,
                                 const ch_config_t *config,
@@ -69,7 +69,7 @@ ch_result_t ch_golden_generate(const ch_result_t_full *result,
  * @param first_mismatch Output: first mismatched stage (-1 if none)
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §5.1
+ * @traceability CH-MATH-001 5.1
  */
 ch_result_t ch_golden_compare(const ch_result_t_full *result,
                                const ch_golden_t *golden,
@@ -83,7 +83,7 @@ ch_result_t ch_golden_compare(const ch_result_t_full *result,
  * @param hash_out Output buffer for 32-byte hash
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §4.2
+ * @traceability CH-MATH-001 4.2
  */
 ch_result_t ch_golden_compute_hash(const ch_golden_t *golden,
                                     uint8_t hash_out[CH_HASH_SIZE],

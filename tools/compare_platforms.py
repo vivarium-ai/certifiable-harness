@@ -15,22 +15,22 @@ def load_result(path):
 def compare_results(results):
     reference = results[0]
     ref_platform = reference['platform']
-    
+
     print(f"Reference platform: {ref_platform}")
     print("Reference hashes:")
     for stage in reference['stages']:
         print(f"  {stage['name']}: {stage['hash'][:16]}...")
     print()
-    
+
     all_match = True
     for result in results[1:]:
         platform = result['platform']
         print(f"Comparing {platform} against {ref_platform}:")
-        
+
         for i, stage in enumerate(result['stages']):
             ref_hash = reference['stages'][i]['hash']
             cur_hash = stage['hash']
-            
+
             if ref_hash == cur_hash:
                 print(f"  ✓ {stage['name']}: MATCH")
             else:
@@ -39,7 +39,7 @@ def compare_results(results):
                 print(f"      {platform}: {cur_hash}")
                 all_match = False
         print()
-    
+
     return all_match
 
 def main():
@@ -48,16 +48,16 @@ def main():
         print()
         print("Compare harness results from multiple platforms for bit-identity.")
         sys.exit(1)
-    
+
     results = [load_result(path) for path in sys.argv[1:]]
     platforms = [r['platform'] for r in results]
-    
+
     print("═" * 60)
     print("  Cross-Platform Bit-Identity Verification")
     print(f"  Platforms: {', '.join(platforms)}")
     print("═" * 60)
     print()
-    
+
     if compare_results(results):
         print("═" * 60)
         print("  RESULT: ALL PLATFORMS BIT-IDENTICAL ✓")

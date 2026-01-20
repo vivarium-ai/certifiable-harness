@@ -300,7 +300,7 @@ G = {
 ### §4.2 Golden Reference Hash
 
 ```
-H_G = SHA256("CH:GOLDEN:v1" ∥ platform ∥ timestamp ∥ config_hash ∥ 
+H_G = SHA256("CH:GOLDEN:v1" ∥ platform ∥ timestamp ∥ config_hash ∥
              harness_hash ∥ commitments[0] ∥ ... ∥ commitments[6])
 ```
 
@@ -328,16 +328,16 @@ Total: 368 bytes
 ```
 GENERATE_GOLDEN(config, output_path):
     result = HARNESS_RUN(config)
-    
+
     golden.platform = GET_PLATFORM()
     golden.timestamp = GET_TIMESTAMP()
     golden.config_hash = HASH_CONFIG(config)
-    
+
     FOR s = 0 TO STAGE_COUNT - 1:
         golden.commitments[s] = result.stages[s].hash
-    
+
     golden.file_hash = COMPUTE_GOLDEN_HASH(golden)
-    
+
     WRITE_GOLDEN(golden, output_path)
 ```
 
@@ -350,7 +350,7 @@ GENERATE_GOLDEN(config, output_path):
 ```
 COMPARE_GOLDEN(result, golden):
     mismatches = []
-    
+
     FOR s = 0 TO STAGE_COUNT - 1:
         IF result.stages[s].hash ≠ golden.commitments[s]:
             mismatches.append({
@@ -358,7 +358,7 @@ COMPARE_GOLDEN(result, golden):
                 expected: golden.commitments[s],
                 actual: result.stages[s].hash
             })
-    
+
     RETURN {
         bit_identical: (|mismatches| == 0),
         mismatches: mismatches
@@ -371,14 +371,14 @@ COMPARE_GOLDEN(result, golden):
 COMPARE_PLATFORMS(results[]):
     reference = results[0]
     all_identical = true
-    
+
     FOR i = 1 TO |results| - 1:
         comparison = COMPARE_GOLDEN(results[i], reference)
         IF NOT comparison.bit_identical:
             all_identical = false
-            REPORT_DIVERGENCE(reference.platform, results[i].platform, 
+            REPORT_DIVERGENCE(reference.platform, results[i].platform,
                              comparison.mismatches)
-    
+
     RETURN all_identical
 ```
 
@@ -393,7 +393,7 @@ ANALYZE_DIVERGENCE(expected, actual, stage):
         IF expected[i] ≠ actual[i]:
             first_diff = i
             BREAK
-    
+
     RETURN {
         stage: stage,
         first_diff_byte: first_diff,
@@ -414,11 +414,11 @@ harness_config_t = {
     policy_path: string,        /* Path to COE policy JSON */
     golden_path: string | NULL, /* Path to golden reference */
     output_path: string | NULL, /* Path for JSON report */
-    
+
     num_samples: uint32,        /* Samples to process (0 = all) */
     batch_size: uint32,         /* Batch size for training/inference */
     epochs: uint32,             /* Training epochs */
-    
+
     verbose: bool,              /* Enable verbose output */
     generate_golden: bool       /* Generate golden reference */
 }
@@ -429,7 +429,7 @@ harness_config_t = {
 For reproducibility, the configuration is hashed:
 
 ```
-H_config = SHA256("CH:CONFIG:v1" ∥ 
+H_config = SHA256("CH:CONFIG:v1" ∥
                   data_path ∥ policy_path ∥
                   num_samples ∥ batch_size ∥ epochs)
 ```
@@ -533,41 +533,41 @@ H_report = SHA256("CH:REPORT:v1" ∥ version ∥ platform ∥ timestamp ∥
 HARNESS_RUN(config):
     result = INIT_RESULT()
     context = INIT_CONTEXT()
-    
+
     /* Stage 0: Data */
     context.data = STAGE_DATA_RUN(config)
     result.stages[0] = CAPTURE_RESULT(context.data)
-    
+
     /* Stage 1: Training */
     context.training = STAGE_TRAINING_RUN(context.data, config)
     result.stages[1] = CAPTURE_RESULT(context.training)
-    
+
     /* Stage 2: Quant */
     context.quant = STAGE_QUANT_RUN(context.training, config)
     result.stages[2] = CAPTURE_RESULT(context.quant)
-    
+
     /* Stage 3: Deploy */
     context.deploy = STAGE_DEPLOY_RUN(context.quant, config)
     result.stages[3] = CAPTURE_RESULT(context.deploy)
-    
+
     /* Stage 4: Inference */
     context.inference = STAGE_INFERENCE_RUN(context.deploy, config)
     result.stages[4] = CAPTURE_RESULT(context.inference)
-    
+
     /* Stage 5: Monitor */
     context.monitor = STAGE_MONITOR_RUN(context.deploy, context.inference, config)
     result.stages[5] = CAPTURE_RESULT(context.monitor)
-    
+
     /* Stage 6: Verify */
     context.verify = STAGE_VERIFY_RUN(context, config)
     result.stages[6] = CAPTURE_RESULT(context.verify)
-    
+
     /* Golden comparison */
     IF config.golden_path ≠ NULL:
         golden = LOAD_GOLDEN(config.golden_path)
         comparison = COMPARE_GOLDEN(result, golden)
         result.bit_identical = comparison.bit_identical
-    
+
     RETURN result
 ```
 

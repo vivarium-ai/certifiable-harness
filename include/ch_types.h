@@ -1,9 +1,9 @@
 /**
  * @file ch_types.h
  * @brief Core types for certifiable-harness
- * @traceability CH-MATH-001 §2, §7
+ * @traceability CH-MATH-001 2, 7
  *
- * Copyright © 2026 The Murray Family Innovation Trust. All rights reserved.
+ * Copyright (c) 2026 The Murray Family Innovation Trust. All rights reserved.
  */
 
 #ifndef CH_TYPES_H
@@ -33,7 +33,7 @@ extern "C" {
 
 /*============================================================================
  * Result Codes
- * @traceability CH-MATH-001 §11.3
+ * @traceability CH-MATH-001 11.3
  *============================================================================*/
 
 typedef enum {
@@ -63,7 +63,7 @@ typedef struct {
 
 /*============================================================================
  * Stage Identifiers
- * @traceability CH-MATH-001 §2.1
+ * @traceability CH-MATH-001 2.1
  *============================================================================*/
 
 typedef enum {
@@ -78,7 +78,7 @@ typedef enum {
 
 /*============================================================================
  * Stage Result
- * @traceability CH-MATH-001 §7.1
+ * @traceability CH-MATH-001 7.1
  *============================================================================*/
 
 typedef struct {
@@ -92,7 +92,7 @@ typedef struct {
 
 /*============================================================================
  * Pipeline Result
- * @traceability CH-MATH-001 §7.2
+ * @traceability CH-MATH-001 7.2
  *============================================================================*/
 
 typedef struct {
@@ -106,7 +106,7 @@ typedef struct {
 
 /*============================================================================
  * Golden Reference
- * @traceability CH-MATH-001 §4.1
+ * @traceability CH-MATH-001 4.1
  *============================================================================*/
 
 #define CH_GOLDEN_MAGIC     0x52474843  /* "CHGR" little-endian */
@@ -126,7 +126,7 @@ typedef struct {
 
 /*============================================================================
  * Configuration
- * @traceability CH-MATH-001 §6.1
+ * @traceability CH-MATH-001 6.1
  *============================================================================*/
 
 typedef struct {
@@ -134,11 +134,11 @@ typedef struct {
     const char *policy_path;        /**< Path to COE policy JSON */
     const char *golden_path;        /**< Path to golden reference (NULL to skip) */
     const char *output_path;        /**< Path for JSON report (NULL to skip) */
-    
+
     uint32_t    num_samples;        /**< Samples to process (0 = all) */
     uint32_t    batch_size;         /**< Batch size for training/inference */
     uint32_t    epochs;             /**< Training epochs */
-    
+
     bool        verbose;            /**< Enable verbose output */
     bool        generate_golden;    /**< Generate golden reference */
 } ch_config_t;
@@ -148,7 +148,7 @@ typedef struct {
  *============================================================================*/
 
 static inline bool ch_has_fault(const ch_fault_flags_t *f) {
-    return f->overflow || f->underflow || f->div_zero || 
+    return f->overflow || f->underflow || f->div_zero ||
            f->domain || f->precision;
 }
 
@@ -170,7 +170,7 @@ static inline const char *ch_stage_name(ch_stage_t stage) {
 
 static inline const char *ch_result_string(ch_result_t r) {
     static const char *strings[] = {
-        "OK", "NULL", "CONFIG", "IO", "STAGE", 
+        "OK", "NULL", "CONFIG", "IO", "STAGE",
         "SKIPPED", "GOLDEN", "PARSE", "OVERFLOW"
     };
     return (r <= CH_ERR_OVERFLOW) ? strings[r] : "UNKNOWN";

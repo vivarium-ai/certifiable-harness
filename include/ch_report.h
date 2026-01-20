@@ -1,9 +1,9 @@
 /**
  * @file ch_report.h
  * @brief Report generation API
- * @traceability CH-MATH-001 §8
+ * @traceability CH-MATH-001 8
  *
- * Copyright © 2026 The Murray Family Innovation Trust. All rights reserved.
+ * Copyright (c) 2026 The Murray Family Innovation Trust. All rights reserved.
  */
 
 #ifndef CH_REPORT_H
@@ -26,7 +26,7 @@ extern "C" {
  * @param path Output path
  * @param faults Fault flag accumulator
  * @return CH_OK on success
- * @traceability CH-MATH-001 §8.1
+ * @traceability CH-MATH-001 8.1
  */
 ch_result_t ch_report_write_json(const ch_result_t_full *result,
                                   const ch_golden_t *golden,

@@ -281,11 +281,11 @@ typedef struct {
     const char *policy_path;        /* Path to COE policy JSON */
     const char *golden_path;        /* Path to golden reference */
     const char *output_path;        /* Path for JSON report */
-    
+
     uint32_t    num_samples;        /* Samples to process (0 = all) */
     uint32_t    batch_size;         /* Batch size for training/inference */
     uint32_t    epochs;             /* Training epochs */
-    
+
     bool        verbose;            /* Enable verbose output */
     bool        generate_golden;    /* Generate golden reference */
 } ch_config_t;
@@ -333,34 +333,34 @@ typedef struct {
     uint8_t data_merkle_root[CH_HASH_SIZE];
     void   *batches;
     size_t  batch_count;
-    
+
     /* Stage 1: Training */
     uint8_t training_hash[CH_HASH_SIZE];
     void   *weights_fp32;
     size_t  weights_size;
-    
+
     /* Stage 2: Quant */
     uint8_t quant_hash[CH_HASH_SIZE];
     void   *weights_q16;
     void   *certificate;
-    
+
     /* Stage 3: Deploy */
     uint8_t deploy_root[CH_HASH_SIZE];
     void   *bundle;
-    
+
     /* Stage 4: Inference */
     uint8_t inference_hash[CH_HASH_SIZE];
     void   *predictions;
     size_t  prediction_count;
-    
+
     /* Stage 5: Monitor */
     uint8_t monitor_digest[CH_HASH_SIZE];
     void   *ledger;
-    
+
     /* Stage 6: Verify */
     uint8_t verify_hash[CH_HASH_SIZE];
     void   *report;
-    
+
     /* Validity flags */
     bool stage_valid[CH_STAGE_COUNT];
 } ch_context_t;
@@ -408,7 +408,7 @@ Stage 6 (verify)    → requires stages 0-5
 
 ```c
 static inline bool ch_has_fault(const ch_fault_flags_t *f) {
-    return f->overflow || f->underflow || f->div_zero || 
+    return f->overflow || f->underflow || f->div_zero ||
            f->domain || f->precision;
 }
 
@@ -438,7 +438,7 @@ static inline const char *ch_stage_name(ch_stage_t stage) {
 ```c
 static inline const char *ch_result_string(ch_result_t r) {
     static const char *strings[] = {
-        "OK", "NULL", "CONFIG", "IO", "STAGE", 
+        "OK", "NULL", "CONFIG", "IO", "STAGE",
         "SKIPPED", "GOLDEN", "PARSE", "OVERFLOW"
     };
     return (r <= CH_ERR_OVERFLOW) ? strings[r] : "UNKNOWN";

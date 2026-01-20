@@ -1,8 +1,9 @@
 /**
  * @file main.c
- * @brief CLI entry point
+ * @brief Certifiable Harness entry point
+ * @traceability CH-STRUCT-001
  *
- * Copyright © 2026 The Murray Family Innovation Trust. All rights reserved.
+ * Copyright (c) 2026 The Murray Family Innovation Trust. All rights reserved.
  */
 
 #include "ch_harness.h"
@@ -37,7 +38,7 @@ static void print_usage(const char *prog)
 int main(int argc, char **argv)
 {
     ch_config_t config = ch_config_default();
-    
+
     /* Parse arguments */
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
@@ -77,34 +78,34 @@ int main(int argc, char **argv)
             return 1;
         }
     }
-    
+
     /* Run harness */
     ch_result_t_full result;
     ch_fault_flags_t faults = {0};
-    
+
     printf("\n");
     printf("═══════════════════════════════════════════════════════════════\n");
     printf("  Certifiable Harness v%s\n", CH_VERSION_STRING);
     printf("  Platform: %s\n", ch_get_platform());
     printf("═══════════════════════════════════════════════════════════════\n");
     printf("\n");
-    
+
     ch_result_t rc = ch_harness_run(&config, &result, &faults);
-    
+
     if (rc != CH_OK) {
         fprintf(stderr, "Harness failed: %s\n", ch_result_string(rc));
         return 1;
     }
-    
+
     /* Load or generate golden */
     ch_golden_t golden;
     ch_golden_t *golden_ptr = NULL;
-    
+
     if (config.golden_path && !config.generate_golden) {
         rc = ch_golden_load(config.golden_path, &golden, &faults);
         if (rc == CH_OK) {
             golden_ptr = &golden;
-            
+
             bool bit_identical;
             int first_mismatch;
             ch_golden_compare(&result, &golden, &bit_identical, &first_mismatch, &faults);
@@ -114,23 +115,23 @@ int main(int argc, char **argv)
                     ch_result_string(rc));
         }
     }
-    
+
     /* Print summary */
     ch_report_print_summary(&result, golden_ptr);
-    
+
     /* Generate golden if requested */
     if (config.generate_golden && config.output_path) {
         ch_golden_generate(&result, &config, &golden, &faults);
-        
+
         char golden_path[256];
         snprintf(golden_path, sizeof(golden_path), "%s.golden", config.output_path);
-        
+
         rc = ch_golden_save(&golden, golden_path, &faults);
         if (rc == CH_OK) {
             printf("Golden reference saved: %s\n", golden_path);
         }
     }
-    
+
     /* Write JSON report */
     if (config.output_path) {
         rc = ch_report_write_json(&result, golden_ptr, config.output_path, &faults);
@@ -138,6 +139,6 @@ int main(int argc, char **argv)
             printf("Report saved: %s\n", config.output_path);
         }
     }
-    
+
     return result.all_passed ? 0 : 1;
 }

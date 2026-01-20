@@ -1,9 +1,9 @@
 /**
  * @file ch_hash.h
  * @brief Hash utilities and domain separation tags
- * @traceability CH-MATH-001 §14
+ * @traceability CH-MATH-001 14
  *
- * Copyright © 2026 The Murray Family Innovation Trust. All rights reserved.
+ * Copyright (c) 2026 The Murray Family Innovation Trust. All rights reserved.
  */
 
 #ifndef CH_HASH_H
@@ -17,7 +17,7 @@ extern "C" {
 
 /*============================================================================
  * Domain Separation Tags
- * @traceability CH-MATH-001 §14
+ * @traceability CH-MATH-001 14
  *============================================================================*/
 
 #define CH_TAG_GOLDEN   "CH:GOLDEN:v1"

@@ -302,7 +302,7 @@ void ch_report_print_summary(const ch_result_t_full *result,
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Certifiable Harness Report",
   "type": "object",
-  "required": ["version", "platform", "harness_hash", "stages", 
+  "required": ["version", "platform", "harness_hash", "stages",
                "stages_completed", "all_passed", "bit_identical"],
   "properties": {
     "version": {
@@ -332,7 +332,7 @@ void ch_report_print_summary(const ch_result_t_full *result,
           },
           "name": {
             "type": "string",
-            "enum": ["data", "training", "quant", "deploy", 
+            "enum": ["data", "training", "quant", "deploy",
                      "inference", "monitor", "verify"]
           },
           "result": {
